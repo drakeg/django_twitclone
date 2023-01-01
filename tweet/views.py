@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from .models import Tweet, Notification
-from .forms import TweetForm
+from .forms import ProfileForm, TweetForm
 
 def home(request):
     tweets = Tweet.objects.all().order_by('-id')
@@ -29,6 +29,14 @@ def notifications(request):
         'tweets': Tweet.objects.filter(id__in=notifications.values('tweet'))
     }
     return render(request, 'notifications.html', context)
+
+def profile(request):
+    form = ProfileForm(request.POST or None, instance=request.user.profile)
+    if form.is_valid():
+        form.save()
+    profile = request.user.profile
+    context = {'profile': profile, 'form': form}
+    return render(request, 'profile.html', context)
 
 def login_view(request):
     if request.method == 'POST':

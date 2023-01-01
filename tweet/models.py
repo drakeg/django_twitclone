@@ -11,6 +11,7 @@ class Profile(models.Model):
     state = USStateField(blank=True)
     followers = models.ManyToManyField(User, related_name='followers', blank=True)
     following = models.ManyToManyField(User, related_name='following', blank=True)
+
     def __str__(self):
         return self.user.username
 
@@ -44,7 +45,9 @@ class Notification(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     message = models.TextField()
     read = models.BooleanField(default=False)
-    tweet = models.ForeignKey(Tweet, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.user
 
 class Hashtag(models.Model):
     name = models.CharField(max_length=64)

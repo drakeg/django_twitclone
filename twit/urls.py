@@ -20,6 +20,7 @@ from tweet import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home, name='home'),
+    path('profile/', views.profile, name='profile'),
     path('add_tweet/', views.add_tweet, name='add_tweet'),
     path('notifications/', views.notifications, name='notifications'),
     path('login/', views.login_view, name='login'),
