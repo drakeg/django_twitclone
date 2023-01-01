@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container mt-4">
+    {% if tweets %}
+    {% for tweet in tweets %}
+      <div class="card mb-4">
+        <div class="card-body">
+          <p class="card-text">{{ tweet.content }}</p>
+          {% if tweet.image %}
+            <img src="{{ tweet.image.url }}" class="img-fluid" alt="Tweet image">
+          {% endif %}
+          <p class="card-text">
+            <small class="text-muted">{{ tweet.user }} - {{ tweet.created_at|date:"D d M Y H:i" }}</small>
+          </p>
+        </div>
+      </div>
+    {% endfor %}
+    {% else %}
+  <p>No tweets to display.</p>
+{% endif %}
+  </div>
+{% endblock %}
+
