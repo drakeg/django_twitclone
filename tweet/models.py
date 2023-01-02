@@ -47,7 +47,7 @@ class Notification(models.Model):
     read = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.user
+        return self.user.username
 
 class Hashtag(models.Model):
     name = models.CharField(max_length=64)

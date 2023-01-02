@@ -21,8 +21,11 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home, name='home'),
     path('profile/', views.profile, name='profile'),
-    path('add_tweet/', views.add_tweet, name='add_tweet'),
+    path('add_tweet/', views.add_tweet, name='add_tweet_new'),
+    path('add_tweet/<int:replied_to>/', views.add_tweet, name='add_tweet_reply'),
     path('notifications/', views.notifications, name='notifications'),
+    path('register/', views.register, name='register'),
+    path('search/', views.search, name='search'),
     path('login/', views.login_view, name='login'),
     path('logout/', views.logout_view, name='logout'),
 ]

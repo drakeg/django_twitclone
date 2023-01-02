@@ -1,12 +1,18 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
 
 {% block content %}
   <div class="container mt-4">
-    <h1>Add a tweet</h1>
-    <form method="post" enctype="multipart/form-data">
+    <h1>Add tweet</h1>
+    {% if replied_to %}
+      <p>Replying to tweet {{ replied_to.id }}:</p>
+      <p>{{ replied_to.text }}</p>
+      <hr>
+    {% endif %}
+    <form method="post" class="form">
       {% csrf_token %}
-      {{ form.as_p }}
-      <button type="submit" class="btn btn-primary">Post tweet</button>
+      {{ form|crispy }}
+      <button type="submit" class="btn btn-primary">Add tweet</button>
     </form>
   </div>
 {% endblock %}

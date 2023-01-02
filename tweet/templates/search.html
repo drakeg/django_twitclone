@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container mt-4">
+    <h1>Search</h1>
+    <form method="get" novalidate>
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+    {% if tweets %}
+      <h2>Results</h2>
+      {% for tweet in tweets %}
+        <div class="card mt-4">
+          <div class="card-body">
+            <h5 class="card-title">{{ tweet.user }}</h5>
+            <p class="card-text">{{ tweet.content }}</p>
+            {% if tweet.image %}
+              <img src="{{ tweet.image.url }}" class="img-fluid mt-2">
+            {% endif %}
+          </div>
+        </div>
+      {% endfor %}
+    {% endif %}
+  </div>
+{% endblock %}
+

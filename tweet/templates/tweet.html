@@ -1,0 +1,30 @@
+<div class="card mb-4">
+  <div class="card-body">
+    <p class="card-text">{{ tweet.content }}</p>
+    {% if tweet.image %}
+      <img src="{{ tweet.image.url }}" class="img-fluid" alt="Tweet image">
+    {% endif %}
+    <p class="card-text">
+      <small class="text-muted">{{ tweet.user }} - {{ tweet.created_at|date:"D d M Y H:i" }}</small>
+    </p>
+    {% if not tweet.replied_to %}
+      <a href="{% url 'add_tweet_reply' replied_to=tweet.id %}" class="btn btn-outline-secondary">Reply</a>
+    {% endif %}
+  </div>
+</div>
+
+{% for reply in tweet.replies.all %}
+  <div class="card mb-4 bg-light">
+    <div class="card-body">
+      <p class="card-text">{{ reply.content }}</p>
+      {% if reply.image %}
+        <img src="{{ reply.image.url }}" class="img-fluid" alt="Tweet image">
+      {% endif %}
+      <p class="card-text">
+        <small class="text-muted">{{ reply.user }} - {{ reply.created_at|date:"D d M Y H:i" }}</small>
+      </p>
+      <a href="{% url 'add_tweet_reply' replied_to=reply.id %}" class="btn btn-outline-secondary">Reply</a>
+    </div>
+  </div>
+{% endfor %}
+
