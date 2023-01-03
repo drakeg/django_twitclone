@@ -3,9 +3,12 @@
 {% block content %}
   <div class="container mt-4">
     {% if tweets %}
-    {% for tweet in tweets %}
-      {% include 'tweet.html' %}
-    {% endfor %}
+      {% for tweet in tweets %}
+        {% include 'tweet.html' with tweet=tweet replied_to=None %}
+        {% for reply in tweet.replies.all %}
+          {% include 'tweet.html' with tweet=reply replied_to=tweet %}
+        {% endfor %}
+      {% endfor %}
     {% else %}
       <p>No tweets to display.</p>
     {% endif %}

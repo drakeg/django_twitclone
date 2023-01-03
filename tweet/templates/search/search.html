@@ -10,13 +10,13 @@
   {% if page.object_list %}
     {% for result in page.object_list %}
       <div class="result">
-        {% if result.object.__class__.__name__ == "Tweet" %}
-          <p>Tweet: {{ result.object.content }}</p>
-        {% elif result.object.__class__.__name__ == "Hashtag" %}
-          <p>Hashtag: {{ result.object.name }}</p>
-        {% elif result.object.__class__.__name__ == "User" %}
-          <p>User: {{ result.object.username }}</p>
-        {% endif %}
+	{% if result.object.__class__.name == "Tweet" %}
+  		<p>Tweet: {{ result.object.content }}</p>
+	{% elif result.object.__class__.name == "Hashtag" %}
+		<p>Hashtag: {{ result.object.name }}</p>
+	{% elif result.object.__class__.name == "User" %}
+		<p>User: {{ result.object.username }}</p>
+	{% endif %}
       </div>
     {% endfor %}
 

@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
-from .models import Tweet, Notification, Profile, Hashtag
+from .models import Tweet, Retweet, Notification, Profile, Hashtag
 from .forms import ProfileForm, TweetForm, RegistrationForm, SearchForm
 from django.contrib.auth.models import User
 from django.contrib import messages
+from django.db.models import Q
 import re
 
 def home(request):
@@ -56,6 +57,29 @@ def add_tweet(request, replied_to=None):
     # Render the template with the form
     return render(request, 'add_tweet.html', {'form': form, 'replied_to': replied_to_tweet})
 
+def retweet(request, tweet_id):
+    original_tweet = Tweet.objects.get(pk=tweet_id)
+
+    # Create a new tweet with the original tweet's content
+    retweet = Tweet(user=request.user, content=original_tweet.content)
+    retweet.save()
+
+    # If the original tweet had an image, add it to the retweet as well
+    if original_tweet.image:
+        retweet.image = original_tweet.image
+        retweet.save()
+
+    # Extract hashtags from the retweet text and add them to the retweet
+    hashtags = re.findall(r'#(\w+)', retweet.content)
+    for hashtag in hashtags:
+        # Create a Hashtag object, or retrieve an existing one
+        obj, created = Hashtag.objects.get_or_create(name=hashtag)
+        # Add the hashtag to the tweet
+        retweet.hashtags.add(obj)
+
+    # Redirect to the home page
+    return redirect('home')
+
 def notifications(request):
     notifications = Notification.objects.filter(user=request.user, read=False).order_by('-id')
     context = {
@@ -88,14 +112,16 @@ def register(request):
     return render(request, 'register.html', {'form': form})
 
 def search(request):
-    tweets = []
-    form = SearchForm()
-    if 'query' in request.GET:
-        form = SearchForm(request.GET)
-        if form.is_valid():
-            query = form.cleaned_data['query']
-            tweets = Tweet.objects.filter(content__icontains=query)
-    return render(request, 'search.html', {'form': form, 'tweets': tweets})
+    sqs = SearchQuerySet().autocomplete(content_auto=request.POST.get('search_text', ''))[:5]
+    return render(request, 'search.html', {'results': sqs})
+
+#def search(request):
+#    query = request.GET.get('q')
+#    if query:
+#        tweets = Tweet.objects.filter(Q(content__icontains=query) | Q(user__username__icontains=query))
+#    else:
+#        tweets = Tweet.objects.all()
+#    return render(request, 'search_results.html', {'tweets': tweets})
 
 def login_view(request):
     if request.method == 'POST':

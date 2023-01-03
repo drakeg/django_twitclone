@@ -1,0 +1,210 @@
+/* Import Bootstrap */
+@import url('https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css');
+
+/* Import custom fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* Set body font */
+body {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* Set header font */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+}
+
+/* Set default link color */
+a {
+  color: #1da1f2;
+}
+
+/* Set hover color for links */
+a:hover {
+  color: #00acee;
+}
+
+/* Style for navbar */
+.navbar {
+  background-color: #ffffff;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* Style for navbar links */
+.navbar a {
+  color: #14171a;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+/* Style for navbar brand */
+.navbar .navbar-brand {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+/* Style for navbar toggle button */
+.navbar .navbar-toggler {
+  border-color: #14171a;
+}
+
+/* Style for navbar toggle button icon */
+.navbar .navbar-toggler-icon {
+  background-image: url('data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(20, 23, 26, 0.5)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E');
+}
+
+/* Style for active navbar link */
+.navbar .nav-item.active a {
+  color: #1da
+}
+
+/* Style for navbar search form */
+.navbar .form-inline {
+margin-left: auto;
+}
+
+/* Style for navbar search input */
+.navbar .form-control {
+background-color: #f5f8fa;
+border: none;
+border-radius: 20px;
+font-size: 14px;
+height: 36px;
+outline: none;
+padding: 0 28px 0 12px;
+width: 200px;
+}
+
+/* Style for navbar search submit button */
+.navbar .btn {
+background-color: #1da1f2;
+border: none;
+border-radius: 20px;
+color: #ffffff;
+font-size: 14px;
+font-weight: 600;
+height: 36px;
+line-height: 1;
+padding: 0 12px;
+text-transform: uppercase;
+}
+
+/* Style for navbar search submit button on hover */
+.navbar .btn:hover {
+background-color: #00acee;
+}
+
+/* Style for main container */
+.container {
+max-width: 1140px;
+width: 100%;
+}
+
+/* Style for main content area */
+.main {
+flex: 1;
+}
+
+/* Style for tweet cards */
+.tweet {
+background-color: #ffffff;
+border: 1px solid rgba(0, 0, 0, 0.1);
+border-radius: 5px;
+margin-bottom: 20px;
+padding: 20px;
+}
+
+/* Style for tweet text */
+.tweet p {
+font-size: 16px;
+line-height: 1.5;
+}
+
+/* Style for tweet image */
+.tweet img {
+border-radius: 5px;
+height: auto;
+margin-bottom: 20px;
+max-width: 100%;
+}
+
+/* Style for tweet metadata */
+.tweet .metadata {
+color: #657786
+;
+font-size: 14px;
+margin-bottom: 20px;
+}
+
+/* Style for tweet replies */
+.tweet .replies {
+margin-left: 50px;
+}
+
+/* Style for tweet reply text */
+.tweet .replies p {
+font-size: 16px;
+line-height: 1.5;
+}
+
+/* Style for tweet reply image */
+.tweet .replies img {
+border-radius: 5px;
+height: auto;
+margin-bottom: 20px;
+max-width: 100%;
+}
+
+/* Style for tweet reply metadata */
+.tweet .replies .metadata {
+color: #657786;
+font-size: 14px;
+margin-bottom: 20px;
+}
+
+/* Style for tweet reply action buttons */
+.tweet .replies .actions {
+margin-top: 20px;
+}
+
+/* Style for tweet action buttons */
+.tweet .actions {
+margin-top: 20px;
+}
+
+/* Style for tweet action buttons */
+.tweet .btn {
+background-color: #1da1f2;
+border: none;
+color: #ffffff;
+font-size: 14px;
+font-weight: 600;
+height: 36px;
+line-height: 1;
+padding: 0 12px;
+text-transform: uppercase;
+}
+
+/* Style for tweet action buttons on hover */
+.tweet .btn:hover {
+background-color: #00acee;
+}
+
+/* Style for tweet form */
+.tweet-form {
+margin-bottom: 20px;
+}
+
+/* Style for tweet form textarea */
+.tweet-form textarea {
+background-color: #f5f8fa;
+border: none;
+border-radius: 5px;
+font-size: 16px;
+height: 200px;
+outline: none;

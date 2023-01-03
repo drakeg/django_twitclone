@@ -9,11 +9,14 @@
     </p>
     {% if not tweet.replied_to %}
       <a href="{% url 'add_tweet_reply' replied_to=tweet.id %}" class="btn btn-outline-secondary">Reply</a>
+	<a href="{% url 'retweet' tweet.id %}" class="btn btn-secondary">Retweet</a>
+
     {% endif %}
   </div>
 </div>
 
 {% for reply in tweet.replies.all %}
+
   <div class="card mb-4 bg-light">
     <div class="card-body">
       <p class="card-text">{{ reply.content }}</p>
@@ -23,8 +26,9 @@
       <p class="card-text">
         <small class="text-muted">{{ reply.user }} - {{ reply.created_at|date:"D d M Y H:i" }}</small>
       </p>
-      <a href="{% url 'add_tweet_reply' replied_to=reply.id %}" class="btn btn-outline-secondary">Reply</a>
+      <a href="{% url 'add_tweet_reply' replied_to=reply.id }}" class="btn btn-secondary">Reply</a>
+	<a href="{% url 'retweet' tweet.id %}" class="btn btn-secondary">Retweet</a>
+
     </div>
   </div>
 {% endfor %}
-

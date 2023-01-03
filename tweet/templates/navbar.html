@@ -32,5 +32,9 @@
         </li>
       {% endif %}
     </ul>
+    <form class="form-inline" method="get" action="{% url 'haystack_search' %}">
+    	<input class="form-control" type="search" name="q" placeholder="Search">
+	<button class="btn btn-outline-success" type="submit">Search</button>
+    </form>
   </div>
 </nav>

@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% load haystack_tags %}
+
+{% for tweet in tweets %}
+  <div class="tweet">
+    <p>{{ tweet.content }}</p>
+    <p>By {{ tweet.user }}</p>
+  </div>
+{% endfor %}
+

@@ -21,6 +21,7 @@ class Tweet(models.Model):
     image = models.ImageField(upload_to='tweet_images', blank=True)
     hashtags = models.ManyToManyField('Hashtag', blank=True)
     replied_to = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True)
+    retweet_count = models.PositiveIntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def save(self, *args, **kwargs):
@@ -54,3 +55,8 @@ class Hashtag(models.Model):
 
     def __str__(self):
         return self.name
+
+class Retweet(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    tweet = models.ForeignKey(Tweet, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
