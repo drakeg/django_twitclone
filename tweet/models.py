@@ -22,6 +22,7 @@ class Tweet(models.Model):
     hashtags = models.ManyToManyField('Hashtag', blank=True)
     replied_to = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True)
     retweet_count = models.PositiveIntegerField(default=0)
+    likes = models.ManyToManyField(User, related_name='likes')
     created_at = models.DateTimeField(auto_now_add=True)
 
     def save(self, *args, **kwargs):
@@ -39,8 +40,11 @@ class Tweet(models.Model):
                 pass
         super().save(*args, **kwargs)
 
+    def has_liked(self, user):
+        return self.likes.filter(user=user).exists()
+
     def __str__(self):
-        return self.content
+        return f"{self.content} ({self.likes.count()} likes)"
 
 class Notification(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -50,13 +54,13 @@ class Notification(models.Model):
     def __str__(self):
         return self.user.username
 
+class Like(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    tweet = models.ForeignKey(Tweet, on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(auto_now_add=True)
+
 class Hashtag(models.Model):
     name = models.CharField(max_length=64)
 
     def __str__(self):
         return self.name
-
-class Retweet(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    tweet = models.ForeignKey(Tweet, on_delete=models.CASCADE)
-    created_at = models.DateTimeField(auto_now_add=True)

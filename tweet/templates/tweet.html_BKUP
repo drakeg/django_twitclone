@@ -1,0 +1,27 @@
+    <div class="card mb-4">
+      <div class="card-body">
+        <p class="card-text">{{ tweet.content }}</p>
+        {% if tweet.image %}
+          <img src="{{ tweet.image.url }}" class="img-fluid" alt="Tweet image">
+        {% endif %}
+        <p class="card-text">
+          <small class="text-muted">{{ tweet.user }} - {{ tweet.created_at|date:"D d M Y H:i" }}</small>
+        </p>
+
+<!-- Display the like button and current number of likes -->
+       {% if not request.user in tweet.likes.all %}
+          <form action="{% url 'like_tweet' tweet.id %}" method="POST">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-thumbs-up"></i></button>
+          </form>
+      {% endif %}
+      <span class="num-likes">{{ tweet.likes.count }}</span>
+      {% if not tweet.replied_to %}
+         <a href="{% url 'add_tweet_reply' replied_to=tweet.id %}"><button class="btn btn-outline-secondary btn-sm">
+            <i class="fas fa-reply"></i></button></a>
+      {% endif %}
+	 <a href="{% url 'retweet' tweet.id %}"><button class="btn btn-outline-secondary btn-sm">
+            <i class="fas fa-retweet"></i></button></a>
+
+      </div>
+    </div>

@@ -1,0 +1,12 @@
+{% if form %}
+  <form action="{% if tweet %}{% url 'update_tweet' tweet.id %}{% else %}{% url 'create_tweet' %}{% endif %}" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    {% if tweet %}
+      <input type="submit" value="Update Tweet" class="btn btn-primary">
+    {% else %}
+      <input type="submit" value="Create Tweet" class="btn btn-primary">
+    {% endif %}
+  </form>
+{% endif %}
+

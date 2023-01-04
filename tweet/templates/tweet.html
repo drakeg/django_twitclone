@@ -1,34 +1,52 @@
-<div class="card mb-4">
-  <div class="card-body">
-    <p class="card-text">{{ tweet.content }}</p>
-    {% if tweet.image %}
-      <img src="{{ tweet.image.url }}" class="img-fluid" alt="Tweet image">
-    {% endif %}
-    <p class="card-text">
-      <small class="text-muted">{{ tweet.user }} - {{ tweet.created_at|date:"D d M Y H:i" }}</small>
-    </p>
-    {% if not tweet.replied_to %}
-      <a href="{% url 'add_tweet_reply' replied_to=tweet.id %}" class="btn btn-outline-secondary">Reply</a>
-	<a href="{% url 'retweet' tweet.id %}" class="btn btn-secondary">Retweet</a>
+{% block content %}
+  <div class="container mt-4">
+    <div class="card mb-4">
+      <div class="card-body">
+        <p class="card-text">{{ tweet.content }}</p>
+        {% if tweet.image %}
+          <img src="{{ tweet.image.url }}" class="img-fluid" alt="Tweet image">
+        {% endif %}
+        <p class="card-text">
+          <small class="text-muted">{{ tweet.user }} - {{ tweet.created_at|date:"D d M Y H:i" }}</small>
+        </p>
 
-    {% endif %}
-  </div>
+<!-- Display the like button and current number of likes -->
+       {% if not request.user in tweet.likes.all %}
+          <form action="{% url 'like_tweet' tweet.id %}" method="POST">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-thumbs-up"></i></button>
+          </form>
+      {% endif %}
+      <span class="num-likes">{{ tweet.likes.count }}</span>
+      {% if not tweet.replied_to %}
+         <a href="{% url 'add_tweet_reply' replied_to=tweet.id %}"><button class="btn btn-outline-secondary btn-sm">
+            <i class="fas fa-reply"></i></button></a>
+<a href="{% url 'retweet' tweet.id %}"><button class="btn btn-outline-secondary btn-sm">
+<i class="fas fa-retweet"></i></button></a>
+{% endif %}
 </div>
 
-{% for reply in tweet.replies.all %}
-
-  <div class="card mb-4 bg-light">
-    <div class="card-body">
-      <p class="card-text">{{ reply.content }}</p>
-      {% if reply.image %}
-        <img src="{{ reply.image.url }}" class="img-fluid" alt="Tweet image">
-      {% endif %}
-      <p class="card-text">
-        <small class="text-muted">{{ reply.user }} - {{ reply.created_at|date:"D d M Y H:i" }}</small>
-      </p>
-      <a href="{% url 'add_tweet_reply' replied_to=reply.id }}" class="btn btn-secondary">Reply</a>
-	<a href="{% url 'retweet' tweet.id %}" class="btn btn-secondary">Retweet</a>
-
-    </div>
-  </div>
-{% endfor %}
+   </div>
+   {% for reply in replies %}
+     <div class="card mb-4 bg-light">
+       <div class="card-body">
+         <p class="card-text">{{ reply.content }}</p>
+         {% if reply.image %}
+           <img src="{{ reply.image.url }}" class="img-fluid" alt="Tweet image">
+         {% endif %}
+         <p class="card-text">
+           <small class="text-muted">{{ reply.user }} - {{ reply.created_at|date:"D d M Y H:i" }}</small>
+         </p>
+         {% if not reply.replied_to %}
+           <a href="{% url 'add_tweet_reply' replied_to=reply.id %}"><button class="btn btn-outline-secondary btn-sm">
+              <i class="fas fa-reply"></i></button></a>
+           <a href="{% url 'retweet' reply.id %}"><button class="btn btn-outline-secondary btn-sm">
+              <i class="fas fa-retweet"></i></button></a>
+         {% endif %}
+       </div>
+     </div>
+   {% endfor %}
+   {% if not replied_to %}
+     {% include 'tweet_form.html' %}
+   {% endif %}
+ {% endblock %}

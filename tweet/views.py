@@ -1,6 +1,6 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
-from .models import Tweet, Retweet, Notification, Profile, Hashtag
+from .models import Tweet, Notification, Profile, Hashtag
 from .forms import ProfileForm, TweetForm, RegistrationForm, SearchForm
 from django.contrib.auth.models import User
 from django.contrib import messages
@@ -36,7 +36,6 @@ def add_tweet(request, replied_to=None):
             if replied_to_tweet and replied_to_tweet.user != request.user:
                 notification = Notification(message=tweet, user=replied_to_tweet.user)
                 notification.save()
-
 
             # Extract hashtags from the tweet text
             hashtags = re.findall(r'#(\w+)', tweet.content)
@@ -96,6 +95,26 @@ def profile(request):
     context = {'profile': profile, 'form': form}
     return render(request, 'profile.html', context)
 
+def like_tweet(request, tweet_id):
+    tweet = get_object_or_404(Tweet, pk=tweet_id)
+    # Check if the user has already liked the tweet
+    if tweet.likes.filter(pk=request.user.pk).exists():
+        # If they have, display a message
+        messages.info(request, "You've already liked this tweet!")
+    else:
+        # Add the user to the likes field
+        tweet.likes.add(request.user)
+    return redirect('home')
+
+def unlike_tweet(request, tweet_id):
+    tweet = get_object_or_404(Tweet, pk=tweet_id)
+    # Check if the user has already liked the tweet
+    if tweet.likes.filter(user=request.user).exists():
+        # If they have, decrease the number of likes by 1 and save the tweet
+        tweet.likes -= 1
+        tweet.save()
+    return redirect('home')
+
 def register(request):
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
@@ -114,14 +133,6 @@ def register(request):
 def search(request):
     sqs = SearchQuerySet().autocomplete(content_auto=request.POST.get('search_text', ''))[:5]
     return render(request, 'search.html', {'results': sqs})
-
-#def search(request):
-#    query = request.GET.get('q')
-#    if query:
-#        tweets = Tweet.objects.filter(Q(content__icontains=query) | Q(user__username__icontains=query))
-#    else:
-#        tweets = Tweet.objects.all()
-#    return render(request, 'search_results.html', {'tweets': tweets})
 
 def login_view(request):
     if request.method == 'POST':
