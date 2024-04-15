@@ -1,7 +1,7 @@
 asgiref==3.8.1
 Django==4.1.13
 django-auth==0.1.9
-django-crispy-forms==1.14.0
+django-crispy-forms==2.1
 django-haystack==3.2.1
 django-localflavor==3.1
 djangorestframework==3.14.0
