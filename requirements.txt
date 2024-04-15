@@ -1,4 +1,4 @@
-asgiref==3.6.0
+asgiref==3.8.1
 Django==4.1.13
 django-auth==0.1.9
 django-crispy-forms==1.14.0
