@@ -3,7 +3,7 @@ Django==4.1.13
 django-auth==0.1.9
 django-crispy-forms==2.1
 django-haystack==3.2.1
-django-localflavor==3.1
+django-localflavor==4.0
 djangorestframework==3.14.0
 Pillow==10.3.0
 python-decouple==3.8
