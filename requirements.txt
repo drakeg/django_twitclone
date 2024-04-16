@@ -7,7 +7,7 @@ django-localflavor==4.0
 djangorestframework==3.14.0
 Pillow==10.3.0
 python-decouple==3.8
-python-stdnum==1.18
+python-stdnum==1.20
 pytz==2022.7
 six==1.16.0
 sqlparse==0.5.0
